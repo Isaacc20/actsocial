@@ -1,0 +1,45 @@
+# Laravel core
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+.phpunit.result.cache
+
+# IDEs and system files
+.idea
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+*.vscode
+.DS_Store
+Thumbs.db
+
+# OS junk
+*.log
+*.swp
+
+# Laravel specific
+/storage/app/public
+/storage/debugbar
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/bootstrap/cache/*.php
+
+# NPM build artifacts
+/public/js/*
+/public/css/*
+/public/mix-manifest.json
+/public/hot
+
+# Optional: if using Laravel Sail or Docker
+docker-compose.override.yml
+vendor-bin/
+
+# Optional: if using Laravel Telescope
+storage/telescope
+
+# Optional: if using Laravel Horizon
+storage/horizon
