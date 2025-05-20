@@ -1,0 +1,29 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "nixpacksPlan": {
+      "phases": {
+        "install": {
+          "cmds": [
+            "composer install --no-dev --optimize-autoloader"
+          ]
+        },
+        "build": {
+          "cmds": [
+            "php artisan config:cache",
+            "php artisan route:cache",
+            "php artisan view:cache"
+          ]
+        }
+      },
+      "providers": {
+        "php": {
+          "version": "8.2"
+        }
+      }
+    }
+  },
+  "deploy": {
+    "startCommand": "php artisan serve --host=0.0.0.0 --port=$PORT"
+  }
+}

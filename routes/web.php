@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Devotional;
 use App\Http\Controllers\InstallController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MemoriesController;
@@ -237,4 +238,15 @@ Route::controller(InstallController::class)->group(function () {
     Route::any('install/finalizing_setup', 'finalizingSetup')->name('finalizing_setup');
     Route::get('install/success', 'success')->name('success');
 });
+
+
+//Devotional group controller
+Route::controller(Devotional::class)->middleware('auth')->group(function () {
+    Route::get('/devotional', 'devotional')->name('devotional');
+    Route::get('/saved-devotionals', 'saved_devotionals')->name('saved_devotionals');
+    Route::get('/devotionals', 'devotional_categories')->name('devotional_categories');
+    Route::get('/devotional/{id}', 'devotional_details')->name('devotional_details');
+    Route::get('/devotional/view/{id}', 'devotional_content')->name('devotional_details');
+});
+
 //Installation routes

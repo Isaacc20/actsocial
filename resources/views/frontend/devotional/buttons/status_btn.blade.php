@@ -1,0 +1,1 @@
+<button class="{{ $btn['status'] ? 'bg-primary text-white' : 'bg-white text-black border' }} rounded-3 py-1 px-3 border-primary" onclick="{{ $btn['action'] }}">{{ $btn['text']  }}</button>

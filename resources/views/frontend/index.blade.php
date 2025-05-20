@@ -51,7 +51,7 @@
     <link rel="stylesheet" href="{{ asset('assets/frontend/gallery/justifiedGallery.min.css') }}">
     <link href="{{ asset('assets/frontend/toaster/toaster.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('assets/frontend/summernote-0.8.18-dist/summernote-lite.min.css') }}" />
+          href="{{ asset('assets/frontend/summernote-0.8.18-dist/summernote-lite.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/own.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/pc.style.css') }}" />
 
@@ -60,8 +60,9 @@
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/fundraiser/css/custom_style.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/fundraiser/css/new-style.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/fundraiser/css/new-responsive.css') }}" />
-    
-   
+
+    <link rel="stylesheet" href="{{ asset('css/devotional.css') }}">
+
     <!-- New -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/fundraiser/css/new_scss/new_style.css') }}" />
 
@@ -74,55 +75,64 @@
 
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/fundraiser/css/custom_new.css') }}" />
 
+
+
     {{-- Job Addon Css --}}
     @if (addon_status('job') == 1)
-     <link rel="stylesheet" href="{{ asset('assets/frontend/css/job/style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/frontend/css/job/style.css') }}" />
     @endif
     {{-- Job Addon Css --}}
-	<link rel="stylesheet" href="{{ asset('assets/frontend/css/fundraiser/css/custom_responsive.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/fundraiser/css/custom_responsive.css') }}" />
+
     <script src="{{ asset('assets/frontend/js/jquery-3.6.0.min.js') }}"></script>
 
 
 </head>
-    @if(Session::get('theme_color'))
-        @php
-            $theme_color = Session::get('theme_color');
-            if ($theme_color === 'dark') {
-                $image = asset('assets/frontend/images/white_sun.svg');
-            } else {
-               
-                $image = asset('assets/frontend/images/white_moon.svg');
-            }
-        @endphp
-  @else
-        @php
-            $theme_color = 'default';
+@if(Session::get('theme_color'))
+    @php
+        $theme_color = Session::get('theme_color');
+        if ($theme_color === 'dark') {
+            $image = asset('assets/frontend/images/white_sun.svg');
+        } else {
+
             $image = asset('assets/frontend/images/white_moon.svg');
-        @endphp
- @endif
+        }
+    @endphp
+@else
+    @php
+        $theme_color = 'default';
+        $image = asset('assets/frontend/images/white_moon.svg');
+    @endphp
+@endif
 
 @php
     $themeColor = App\Models\Setting::where('type', 'theme_color')->value('description');
 @endphp
 <body class="{{$themeColor}} {{$theme_color}}">
-    @php $user_info = Auth()->user() @endphp
+@php $user_info = Auth()->user() @endphp
 
-    @include('frontend.header')
+@include('frontend.header')
 
-    <!-- Main Start -->
-    <main class="main my-4 mt-12">
-        <div class="container">
-            <div class="row">
+<!-- Main Start -->
+<main class="main my-4 mt-12">
+    <div class="container">
+        <div class="row">
 
-                @if (isset($layout))
-                    @include($view_path)
-                @else
-                    <div class="col-lg-3">
-                        @include('frontend.left_navigation')
+            @if (isset($layout))
+                @include($view_path)
+            @else
+                <div class="col-lg-3">
+                    @include('frontend.left_navigation')
+                </div>
+                <!-- Timeline Navigation End -->
+
+                <!-- Content Section Start -->
+
+                @if(isset($full_page))
+                    <div class="col-lg-9 col-sm-12 order-3 order-lg-2">
+                        @include($view_path)
                     </div>
-                    <!-- Timeline Navigation End -->
-
-                    <!-- Content Section Start -->
+                @else
                     <div class="col-lg-6 col-sm-12 order-3 order-lg-2">
                         @include($view_path)
                     </div>
@@ -130,100 +140,101 @@
                         @include('frontend.right_sidebar', ['type' => 'my_account'])
                     </div>
                 @endif
+            @endif
 
-            </div> <!-- row end -->
+        </div> <!-- row end -->
 
-        </div> <!-- container end -->
-    </main>
-    <!-- Main End -->
+    </div> <!-- container end -->
+</main>
+<!-- Main End -->
 
-    <!-- Common modals -->
-    @include('frontend.modal')
+<!-- Common modals -->
+@include('frontend.modal')
 
 
 
-    <!--Javascript
+<!--Javascript
     ========================================================-->
-    <script src="{{ asset('assets/frontend/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/js/venobox.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/js/timepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/js/jquery.datepicker.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/venobox.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/timepicker.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/jquery.datepicker.min.js') }}"></script>
 
 
-    <script src="{{ asset('assets/frontend/js/jquery.nice-select.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/plyr/plyr.js') }}"></script>
-    <script src="{{ asset('assets/frontend/jquery-form/jquery.form.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/jquery.nice-select.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/plyr/plyr.js') }}"></script>
+<script src="{{ asset('assets/frontend/jquery-form/jquery.form.min.js') }}"></script>
 
-    <script src="{{ asset('assets/frontend/leafletjs/leaflet.js') }}"></script>
-    <script src="{{ asset('assets/frontend/leafletjs/leaflet-search.js') }}"></script>
-    <script src="{{ asset('assets/frontend/toaster/toaster.js') }}"></script>
+<script src="{{ asset('assets/frontend/leafletjs/leaflet.js') }}"></script>
+<script src="{{ asset('assets/frontend/leafletjs/leaflet-search.js') }}"></script>
+<script src="{{ asset('assets/frontend/toaster/toaster.js') }}"></script>
 
-    <script src="{{ asset('assets/frontend/gallery/jquery.justifiedGallery.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/gallery/jquery.justifiedGallery.min.js') }}"></script>
 
-    <script src="{{ asset('assets/frontend/js/jQuery.tagify.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/js/jquery-rbox.js') }}"></script>
-
-
-    <script src="{{ asset('assets/frontend/js/plyr_cdn_dw.js') }}"></script>
-
-    <script src="{{ asset('js/share.js') }}"></script>
-
-    <script src="{{ asset('assets/frontend/uploader/file-uploader.js') }}"></script>
-
-    <script src="{{ asset('assets/frontend/summernote-0.8.18-dist/summernote-lite.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/jQuery.tagify.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/jquery-rbox.js') }}"></script>
 
 
-    {{-- fundraiser start----- --}}
-    {{-- <script src="{{ asset('assets/frontend/css/fundraiser/js/custom.js') }}"></script> --}}
-    <script src="{{ asset('assets/frontend/css/fundraiser/js/custom_btn.js') }}"></script>
-    <script src="{{ asset('assets/frontend/css/fundraiser/js/new-script.js') }}"></script>
-    {{-- <script src="{{ asset('assets/frontend/css/fundraiser/js/profile-table.js') }}"></script> --}}
-    {{-- fundraiser end---- --}}
-    
+<script src="{{ asset('assets/frontend/js/plyr_cdn_dw.js') }}"></script>
 
-    
-    {{-- paid content start --}}
-    <script src="{{ asset('assets/frontend/paid-content/js/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/paid-content/js/ckeditor.js') }}"></script>
-    <script src="{{ asset('assets/frontend/paid-content/js/jquery-tjgallery.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/paid-content/js/custom.js') }}"></script>
-    <script src="{{ asset('assets/frontend/paid-content/js/script.js') }}"></script>
-    <script src="{{ asset('assets/frontend/js/addon_layout.js') }}"></script>
-    {{-- paid content end --}}
+<script src="{{ asset('js/share.js') }}"></script>
 
-    <script src="{{ asset('assets/frontend/js/moment.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/js/daterangepicker.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/uploader/file-uploader.js') }}"></script>
 
-    {{-- <script src="{{ asset('assets/frontend/js/custom.js') }}"></script> --}}
+<script src="{{ asset('assets/frontend/summernote-0.8.18-dist/summernote-lite.min.js') }}"></script>
 
-    <script src="{{ asset('assets/frontend/js/initialize.js') }}"></script>
+
+{{-- fundraiser start----- --}}
+{{-- <script src="{{ asset('assets/frontend/css/fundraiser/js/custom.js') }}"></script> --}}
+<script src="{{ asset('assets/frontend/css/fundraiser/js/custom_btn.js') }}"></script>
+<script src="{{ asset('assets/frontend/css/fundraiser/js/new-script.js') }}"></script>
+{{-- <script src="{{ asset('assets/frontend/css/fundraiser/js/profile-table.js') }}"></script> --}}
+{{-- fundraiser end---- --}}
 
 
 
-    @include('frontend.common_scripts')
+{{-- paid content start --}}
+<script src="{{ asset('assets/frontend/paid-content/js/select2.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/paid-content/js/ckeditor.js') }}"></script>
+<script src="{{ asset('assets/frontend/paid-content/js/jquery-tjgallery.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/paid-content/js/custom.js') }}"></script>
+<script src="{{ asset('assets/frontend/paid-content/js/script.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/addon_layout.js') }}"></script>
+{{-- paid content end --}}
 
-    @include('frontend.toaster')
+<script src="{{ asset('assets/frontend/js/moment.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/daterangepicker.min.js') }}"></script>
 
-    @include('frontend.initialize')
+{{-- <script src="{{ asset('assets/frontend/js/custom.js') }}"></script> --}}
 
-    <script>
-        "use strict";
+<script src="{{ asset('assets/frontend/js/initialize.js') }}"></script>
 
-        $(document).ready(function() {
-            $('[name=tag]').tagify({
-                duplicates: false
-            });
+
+
+@include('frontend.common_scripts')
+
+@include('frontend.toaster')
+
+@include('frontend.initialize')
+
+<script>
+    "use strict";
+
+    $(document).ready(function() {
+        $('[name=tag]').tagify({
+            duplicates: false
         });
+    });
 
-    </script>
+</script>
 
 <script>
     $("document").ready(function(){
         var dark = document.getElementById('dark');
-        var storedThemeColor = sessionStorage.getItem('theme_color'); 
+        var storedThemeColor = sessionStorage.getItem('theme_color');
         if (storedThemeColor) {
-            document.body.classList.add(storedThemeColor); 
+            document.body.classList.add(storedThemeColor);
         }
 
         dark.onclick = function(){
@@ -233,7 +244,7 @@
             $.ajax({
                 type: 'POST',
                 url: url,
-                data: { 
+                data: {
                     themeColor: themeColor
                 },
                 headers: {
@@ -243,10 +254,10 @@
                     sessionStorage.setItem('theme_color', themeColor);
                     if (themeColor === 'dark') {
                         $('#dark').attr('src', '{{ asset("assets/frontend/images/white_sun.svg") }}');
-                } else {
-                    
-                    $('#dark').attr('src', '{{ asset("assets/frontend/images/white_moon.svg") }}');
-                }
+                    } else {
+
+                        $('#dark').attr('src', '{{ asset("assets/frontend/images/white_moon.svg") }}');
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error updating theme color:', error);
@@ -259,13 +270,13 @@
 
 
 <script>
-$(document).ready(function(){
-    $('#dark').click(function(){
-        console.log("Dark button clicked"); 
-        $('.webgl body').toggleClass('test');
-        console.log("Class 'test' toggled on .webgl elements"); 
+    $(document).ready(function(){
+        $('#dark').click(function(){
+            console.log("Dark button clicked");
+            $('.webgl body').toggleClass('test');
+            console.log("Class 'test' toggled on .webgl elements");
+        });
     });
-});
 
 
 
