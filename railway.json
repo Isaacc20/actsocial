@@ -1,7 +1,7 @@
 {
   "build": {
     "nixpacksPlan": {
-      "providers": ["php", "composer"],
+      "providers": ["php"],
       "overrides": {
         "php": {
           "version": "8.2"
