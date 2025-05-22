@@ -1,20 +1,22 @@
-# Use official PHP image with Apache
+# Use PHP 8.1 with Apache
 FROM php:8.1-apache
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Install system dependencies
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     git \
     curl \
     unzip \
+    zip \
+    libzip-dev \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    libzip-dev \
-    zip \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+    libjpeg-dev \
+    libfreetype6-dev \
+    && docker-php-ext-install pdo_mysql zip gd mbstring
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
@@ -22,25 +24,21 @@ RUN a2enmod rewrite
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copy project files AFTER Composer is available
+# Copy only necessary files first (better caching)
+COPY composer.json composer.lock ./
+COPY .env.example .env
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Copy the rest of the app
 COPY . .
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage
+    && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Prevent Composer crash on missing APP_KEY
-RUN cp .env.example .env
-
-# Install php dependencies
-RUN composer install --no-dev --optimize-autoloader
-
-# Clear and cache config/routes/views
-RUN php artisan config:clear || true && \
-    php artisan route:clear || true && \
-    php artisan view:clear || true
-
-# Expose port 80
+# Expose Apache port
 EXPOSE 80
 
 # Start Apache
