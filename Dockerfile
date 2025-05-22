@@ -30,10 +30,10 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage
 
 # Prevent Composer crash on missing APP_KEY
-RUN cp .env.example .env || true
+RUN cp .env.example .env
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader || true
+# Install php dependencies
+RUN composer install --no-dev --optimize-autoloader
 
 # Clear and cache config/routes/views
 RUN php artisan config:clear || true && \
