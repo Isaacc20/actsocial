@@ -1,5 +1,5 @@
 # Use PHP 8.1 with Apache
-FROM php:8.1-apache
+FROM php:8.2-apache
 
 # Set working directory
 WORKDIR /var/www/html
