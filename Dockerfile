@@ -29,7 +29,7 @@ COPY composer.json composer.lock ./
 COPY .env.example .env
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist -vvv
 
 # Copy the rest of the app
 COPY . .
