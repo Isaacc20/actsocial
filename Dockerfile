@@ -28,6 +28,12 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY composer.json composer.lock ./
 COPY .env.example .env
 
+# Create necessary Laravel directories
+RUN mkdir -p bootstrap/cache \
+    && mkdir -p storage/framework/{cache,sessions,views} \
+    && chown -R www-data:www-data bootstrap storage \
+    && chmod -R 755 storage
+
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist -vvv
 
